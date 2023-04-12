@@ -1,3 +1,4 @@
+using ApplicationCore.Data;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repository;
 using ApplicationCore.Models;
@@ -11,6 +12,7 @@ builder.Services.AddSingleton<IGenericRepository<QuizItem, int>, MemoryGenericRe
 builder.Services.AddSingleton<IGenericRepository<Quiz, int>, MemoryGenericRepository<Quiz, int>>();
 builder.Services.AddSingleton<IGenericRepository<QuizItemUserAnswer, string>, MemoryGenericRepository<QuizItemUserAnswer, string>>();
 builder.Services.AddSingleton<IQuizUserService, QuizUserService>();
+//builder.Services.AddDbContext<QuizDbContext>();
 builder.Services.AddGrpcClient<PdfGenerator.PdfGeneratorClient>(options =>
 {
     options.Address = new Uri("https://localhost:5000");
