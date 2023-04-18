@@ -26,6 +26,9 @@ public class QuizDbContext : DbContext
     {
         base.OnModelCreating( modelBuilder );
 
+        modelBuilder.Entity<UserEntity>()
+            .HasData( new UserEntity() { Id = 1, Email = "test@gmail.com", Password = "1234" } );
+
         modelBuilder.Entity<QuizItemUserAnswerEntity>()
             .HasOne( e => e.QuizItem );
 
@@ -118,5 +121,15 @@ public class QuizDbContext : DbContext
                     new { QuizItemsId = 4, IncorrectAnswersId = 8 }
                 )
             );
+
+        modelBuilder.Entity<QuizItemUserAnswerEntity>()
+           .HasOne<QuizEntity>()
+           .WithMany()
+           .HasForeignKey( a => a.QuizId );
+
+        modelBuilder.Entity<QuizItemUserAnswerEntity>()
+            .HasOne<UserEntity>()
+            .WithMany()
+            .HasForeignKey( a => a.UserId );
     }
 }

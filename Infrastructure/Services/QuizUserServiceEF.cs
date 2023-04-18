@@ -55,31 +55,32 @@ public class QuizUserServiceEF : IQuizUserService
 
     public QuizItemUserAnswer SaveUserAnswerForQuiz(int quizId, int quizItemId, int userId, string answer)
     {
-        var quizzEntity = _context.Quizzes.Where( x => x.Id == quizId ).FirstOrDefault(); // pobierz encję quizu o quizId
-        if (quizzEntity is null)
-        {
-            throw new ArgumentNullException( $"Quiz with id {quizId} not found" );
-        }
-        var item = _context.QuizItems.Where( x => x.Id == quizItemId ).FirstOrDefault(); // pobierz encję elementu quizu o quizItemId
-        if (item is null)
-        {
-            throw new ArgumentNullException( $"Quiz item with id {quizId} not found" );
-        }
         QuizItemUserAnswerEntity entity = new QuizItemUserAnswerEntity()
         {
-            QuizId = quizId,
-            UserAnswer = answer,
             UserId = userId,
-            QuizItemId = quizItemId
+            QuizItemId = quizItemId,
+            QuizId = quizId,
+            UserAnswer = answer
         };
-        var savedEntity = _context.Add( entity ).Entity;
-        _context.SaveChanges();
-        return new QuizItemUserAnswer(
-            quizItem: QuizMappers.FromEntityToQuizItem( item ),
-            userId: userId,
-            quizId: quizId,
-            answer: answer
-            );
+        try
+        {
+            var saved = _context.UserAnswers.Add( entity ).Entity;
+            _context.SaveChanges();
+            return new QuizItemUserAnswer( quizItem: QuizMappers.FromEntityToQuizItem( saved.QuizItem ),
+                saved.UserId, saved.QuizId, saved.UserAnswer );
+        }
+        catch (DbUpdateException e)
+        {
+            if (e.InnerException.Message.StartsWith( "The INSERT" ))
+            {
+                throw new Exception( "Quiz, quiz item or user not found. Can't save!" );
+            }
+            if (e.InnerException.Message.StartsWith( "Violation of" ))
+            {
+                throw new Exception( e.Message );
+            }
+            throw new Exception( e.Message );
+        }
     }
 
     void IQuizUserService.SaveUserAnswerForQuiz(int quizId, int userId, int quizItemId, string answer)
