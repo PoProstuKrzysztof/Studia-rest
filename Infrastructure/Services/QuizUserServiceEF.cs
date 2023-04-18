@@ -11,10 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Services;
+
 public class QuizUserServiceEF : IQuizUserService
 {
     private readonly QuizDbContext _context;
-    
 
     public QuizUserServiceEF(QuizDbContext context)
     {
@@ -60,7 +60,7 @@ public class QuizUserServiceEF : IQuizUserService
         {
             throw new ArgumentNullException( $"Quiz with id {quizId} not found" );
         }
-        var item = _context.QuizItems.Where( x => x.Id == quizItemId ).FirstOrDefault(); // pobierz encję elementu quizu o quizItemId 
+        var item = _context.QuizItems.Where( x => x.Id == quizItemId ).FirstOrDefault(); // pobierz encję elementu quizu o quizItemId
         if (item is null)
         {
             throw new ArgumentNullException( $"Quiz item with id {quizId} not found" );
@@ -75,11 +75,15 @@ public class QuizUserServiceEF : IQuizUserService
         var savedEntity = _context.Add( entity ).Entity;
         _context.SaveChanges();
         return new QuizItemUserAnswer(
-            quizItem: QuizMappers.FromEntityToQuizItem(item),
+            quizItem: QuizMappers.FromEntityToQuizItem( item ),
             userId: userId,
-            quizId:quizId,
+            quizId: quizId,
             answer: answer
             );
+    }
 
+    void IQuizUserService.SaveUserAnswerForQuiz(int quizId, int userId, int quizItemId, string answer)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Data;
+
 public class QuizDbContext : DbContext
 {
     public DbSet<QuizEntity> Quizzes { get; set; }
@@ -18,7 +19,7 @@ public class QuizDbContext : DbContext
     {
         base.OnConfiguring( optionsBuilder );
         optionsBuilder.UseSqlServer(
-            "Data Source=BR-20\\SQLEXPRESS;Initial Catalog=KP_Lab/2;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" );
+            "Data Source=JUSTCHRIST;Initial Catalog=lab;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
