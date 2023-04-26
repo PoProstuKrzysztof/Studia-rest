@@ -3,6 +3,8 @@ using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repository;
 using ApplicationCore.Models;
 using Infrastructure.Memory.Repository;
+using Infrastructure.MongoDB.Service;
+using Infrastructure.MongoDB;
 using Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 using Web;
@@ -20,6 +22,8 @@ builder.Services.AddSingleton<IGenericRepository<Quiz, int>, MemoryGenericReposi
 builder.Services.AddSingleton<IGenericRepository<QuizItemUserAnswer, string>, MemoryGenericRepository<QuizItemUserAnswer, string>>();
 builder.Services.AddTransient<IQuizUserService, QuizUserServiceEF>();
 builder.Services.AddDbContext<QuizDbContext>();
+builder.Services.Configure<MongoDBSettings>( builder.Configuration.GetSection( "MongoDB" ) );
+builder.Services.AddSingleton<QuizUserServiceMongoDB>();
 //builder.Services.AddTransient<IQuizUserService, QuizUserService>();
 builder.Services.AddSingleton<IQuizUserService, QuizUserService>();
 
