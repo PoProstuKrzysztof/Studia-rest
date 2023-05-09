@@ -63,9 +63,6 @@ public class QuizController : Controller
     [HttpGet( "/{userId}/quizesAnswers/{quizId}" )]
     public QuizUserAnswerDto GetCorrectAnswers([FromRoute] int userId, [FromRoute] int quizId)
     {
-        //List<QuizItemUserAnswer> quizes = _service.GetUserAnswersForQuiz( userId, quizId );
-        //return _service.CountCorrectAnswersForQuizFilledByUser( quizId, userId );
-
         var answers = _service.GetUserAnswersForQuiz( quizId, userId )
             .Where( x => x.QuizId == quizId );
 

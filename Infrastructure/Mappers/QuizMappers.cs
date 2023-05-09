@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Data;
 using ApplicationCore.Models;
 using Infrastructure.EF.Entities;
+using Infrastructure.MongoDB.Entities;
 using Infrastructure.Services;
 using System;
 using System.Collections.Generic;

@@ -3,12 +3,12 @@ using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repository;
 using ApplicationCore.Models;
 using Infrastructure.Memory.Repository;
-using Infrastructure.MongoDB.Service;
 using Infrastructure.MongoDB;
 using Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 using Web;
 using WebAPI.Configuration;
+using Infrastructure.MongoDB.Entities;
 
 var builder = WebApplication.CreateBuilder( args );
 

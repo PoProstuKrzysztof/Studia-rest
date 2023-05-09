@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.MongoDB.Entities;
+
 public class QuizItemMongoEntity
 {
     [BsonElement( "id" )]

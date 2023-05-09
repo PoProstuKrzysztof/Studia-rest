@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.MongoDB.Entities;
 
-public class QuizMongoEntity : BaseMongoEntity
+public class QuizUserAnswerMongoEntity
 {
-    [BsonElement( "id" )]
+    [BsonElement( "quizId" )]
     public int QuizId { get; set; }
 
-    [BsonElement( "title" )]
-    public String Title { get; set; }
+    [BsonElement( "userId" )]
+    public int UserId { get; set; }
 
-    [BsonElement( "items" )]
-    public List<QuizItemMongoEntity> Items { get; set; }
+    [BsonElement( "quizAnswers" )]
+    public List<QuizItemMongoEntity> QuizAnswers { get; set; }
 }
