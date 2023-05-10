@@ -11,16 +11,22 @@ namespace ApplicationCore.Data;
 
 public class QuizDbContext : IdentityDbContext<UserEntity, UserRole, int>
 {
+    public QuizDbContext(DbContextOptions<QuizDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<QuizEntity> Quizzes { get; set; }
     public DbSet<QuizItemEntity> QuizItems { get; set; }
     public DbSet<QuizItemUserAnswerEntity> UserAnswers { get; set; }
     public DbSet<UserEntity> Users { get; set; }
 
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring( optionsBuilder );
         optionsBuilder.UseSqlServer(
-            "Data Source=JUSTCHRIST;Initial Catalog=lab;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" );
+            "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
